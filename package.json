@@ -6,8 +6,6 @@
     "serve": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
     "build": "export NODE_OPTIONS=--openssl-legacy-provider && rm -rf public/{js,fonts,css} && vue-cli-service build --no-clean",
     "lint": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint",
-    "docs:dev": "export NODE_OPTIONS=--openssl-legacy-provider && vuepress dev docs",
-    "docs:build": "export NODE_OPTIONS=--openssl-legacy-provider && vuepress build docs"
   },
   "dependencies": {
     "element-ui": "^2.15.14",
@@ -28,8 +26,7 @@
     "sass-loader": "^7.1.0",
     "vue-cli-plugin-axios": "^0.0.4",
     "vue-cli-plugin-element": "^1.0.1",
-    "vue-template-compiler": "^2.5.21",
-    "vuepress": "^0.14.11"
+    "vue-template-compiler": "^2.5.21"
   },
   "eslintConfig": {
     "root": true,
