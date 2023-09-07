@@ -1,0 +1,54 @@
+// const fs = require('fs');
+// const CompressionPlugin = require("compression-webpack-plugin");
+
+module.exports = {
+  pages: {
+    index: {
+      entry: "src/entries/index.js",
+      template: 'public/index.html',
+      filename: 'index.html',
+      title: 'EAMS',
+      chunks: ['chunk-vendors', 'chunk-common', 'index']
+    }
+  },
+  outputDir: 'public',
+  indexPath: 'index.html',
+  // configureWebpack: {
+  //
+  // },
+  devServer: {
+    // host: 'www.sjms.local',
+    // port: 443,
+    // http2: true,
+    // https: {
+    //   key: fs.readFileSync('certs/fullchain.key'),
+    //   cert: fs.readFileSync('certs/fullchain.cer'),
+    //   ca: fs.readFileSync('certs/ca-bundle.trust.crt'),
+    // },
+    proxy: {
+      '/api': {
+        target: 'https://www.sjms.local',
+        ws: true,
+        changeOrigin: true,
+        secure: false,
+        pathRewrite: {
+          '^/api': '/api'
+        }
+      }
+    },
+    compress: true,
+    open: 'Google Chrome'
+  },
+  // configureWebpack: config => {
+  //   if (process.env.NODE_ENV === 'production') {
+  //     config.plugins.push(new CompressionPlugin({
+  //         algorithm: 'gzip',
+  //         test: /\.js$|\.css/,
+  //         threshold: 10240,
+  //         minRatio: 0.8,
+  //         deleteOriginalAssets: true
+  //       })
+  //     )
+  //   }
+  // }
+};
