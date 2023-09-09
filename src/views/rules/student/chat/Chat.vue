@@ -1,20 +1,11 @@
 <template>
   <div class="main-content">
     <div class="panel">
-      <div class="panel-header" :class="classes">
-        <div class="panel-tools">
-          <el-row :gutter="20">
-            <el-col :span="12" style="text-align: left">
-              <el-button type="info" plain @click="$router.back()">Go back</el-button>
-            </el-col>
-          </el-row>
-        </div>
-      </div>
       <div class="panel-body" :class="classes" style="height: 80vh; display: flex; flex-direction: row">
         <el-main style="padding: 0">
           <el-container class="is-vertical" style="height: 100%">
             <div class="chat-header">
-              <h1>{{student.name}}</h1>
+              <h1>{{school.manager.name}}</h1>
             </div>
             <el-main style="flex: 1; flex-basis: auto; overflow: hidden; box-sizing: border-box; display: block; margin: 0 20px; padding: 0">
               <div class="messages-container">
@@ -48,26 +39,30 @@ export default {
   name: 'Chat',
   data() {
     return {
-      id: this.$route.params.id,
       classes: ['animated', 'fade-in', 'fast'],
       sending: false,
       message: {
         to: this.$route.params.id,
         content: ''
       },
-      student: {
+      school: {
         id: '',
         name: '',
-        email: '',
+        manager: {
+          id: '',
+          name: ''
+        },
+        manager_id: ''
       },
       messages: [],
       connector: null,
     }
   },
   methods: {
-    fetchStudent() {
-      api.student.fetchStudent(this.id).then(res => {
-        this.student = res.data;
+    fetchSchool() {
+      api.school.fetchSchool(this.profile.school_id).then(res => {
+        this.school = res.data;
+        this.fetchMessages();
       }).catch(err => {
         this.$message.error({
           offset: 95,
@@ -76,7 +71,7 @@ export default {
       });
     },
     fetchMessages() {
-      api.message.fetchMessages({to: this.id}).then(res => {
+      api.message.fetchMessages({to: this.school.manager_id}).then(res => {
         this.messages = res.data;
       }).catch(err => {
         this.$message.error({
@@ -128,8 +123,7 @@ export default {
           this.messages.push(e.message)
         });
 
-    this.fetchStudent();
-    this.fetchMessages();
+    this.fetchSchool();
   }
 }
 </script>

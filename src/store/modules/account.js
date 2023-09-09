@@ -40,6 +40,11 @@ export default {
           email: data.email,
           guard: data.guard
         };
+
+        if (data.hasOwnProperty('school_id')) {
+          profile.school_id = data.school_id;
+        }
+
         Vue.set(state, 'profile', profile);
         localStorage.setItem('profile', global.JSON.stringify(profile))
       }

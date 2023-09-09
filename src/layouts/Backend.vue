@@ -8,13 +8,18 @@
           </div>
         </el-col>
         <el-col :span="20">
-          <el-menu :default-active="module" class="el-menu-nav" mode="horizontal" router>
+          <el-menu v-if="profile.guard === 'teacher'" :default-active="module" class="el-menu-nav" mode="horizontal" router>
             <el-menu-item index="/">Dashboard</el-menu-item>
             <el-menu-item index="/school">School</el-menu-item>
           </el-menu>
+          <el-menu v-else :default-active="module" class="el-menu-nav" mode="horizontal" router>
+            <el-menu-item index="/">Dashboard</el-menu-item>
+            <el-menu-item index="/chat">Chat</el-menu-item>
+            <el-menu-item index="/teacher">Teacher</el-menu-item>
+          </el-menu>
         </el-col>
-        <el-col :span="2" style="float: right">
-          <el-row :gutter="20">
+        <el-col :span="2">
+          <el-row :gutter="20" type="flex" justify="end">
             <el-col :span="6">
               <el-badge :value="notifications.length" type="info" style="margin: 12px 0" :hidden="notifications.length === 0">
                 <el-popover placement="bottom" width="80" trigger="click">
@@ -69,7 +74,6 @@
     },
     methods: {
       goToChat(row) {
-        console.log(row)
         let index = this.senders.get(row.id);
         this.notifications.splice(index, 1);
         this.$router.push({path: `/chat/${row.id}`})
@@ -90,7 +94,7 @@
       signOut(){
         this.$store.commit('SET_ACCESS_TOKEN', false);
         this.$store.commit('SET_PROFILE', false);
-        this.$message.success('注销成功');
+        this.$message.success('Sign out successful');
         // Here, the native page jump is used instead of this.$router.push("/signin") to avoid logging in again and adding routes repeatedly.
         window.location.href = '/signin';
       }
@@ -114,13 +118,13 @@
 
       window.Echo = new Echo({
         broadcaster: 'pusher',
-        key: process.env.PUSHER_APP_KEY,
+        key: process.env.VUE_APP_PUSHER_APP_KEY,
         auth: {
           headers: {
             Authorization: `Bearer ${this.access_token}`
           }
         },
-        cluster: process.env.PUSHER_APP_CLUSTER,
+        cluster: process.env.VUE_APP_PUSHER_APP_CLUSTER,
         encrypted: true,
         logToConsole: true
       });

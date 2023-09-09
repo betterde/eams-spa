@@ -66,7 +66,7 @@ const router = new Router({
 
 
 if (store.state.account.access_token && store.state.account.profile.guard) {
-  router.addRoutes(register())
+  router.addRoutes(register(store.state.account.profile.guard))
 }
 
 /**

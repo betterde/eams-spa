@@ -72,7 +72,7 @@
             store.dispatch('signIn', this.credentials).then(() => {
               store.dispatch("fetchProfile").then(res => {
                 this.loading = false;
-                this.$router.addRoutes(register(res.data.type));
+                this.$router.addRoutes(register(res.data.guard));
                 this.$router.replace('/');
               });
             }).catch(err => {
