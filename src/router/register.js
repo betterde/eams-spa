@@ -1,5 +1,3 @@
-import student from "@/apis/modules/student";
-
 function registration(guard) {
   if (guard === 'student') {
     return [
