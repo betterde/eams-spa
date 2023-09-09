@@ -47,9 +47,9 @@
           google: false
         },
         credentials: {
-          guard: 'teacher',
-          username: 'george@betterde.com',
-          password: 'chopin'
+          guard: '',
+          username: '',
+          password: ''
         },
         rules: {
           guard: [

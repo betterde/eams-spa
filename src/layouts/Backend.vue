@@ -2,27 +2,45 @@
   <el-container>
     <el-header>
       <el-row :gutter="20">
-        <el-col :span="4">
+        <el-col :span="2">
           <div class="grid-content logo">
             <h3 style="line-height: 36px;"><router-link to="/server">EAMS</router-link></h3>
           </div>
         </el-col>
-        <el-col :span="16">
+        <el-col :span="20">
           <el-menu :default-active="module" class="el-menu-nav" mode="horizontal" router>
             <el-menu-item index="/">Dashboard</el-menu-item>
             <el-menu-item index="/school">School</el-menu-item>
           </el-menu>
         </el-col>
-        <el-col :span="4" style="float: right">
-          <el-dropdown trigger="click" @command="handleCommand">
-          <span class="el-dropdown-link">
-            <div class="avatar grid-content" v-html="profile.name.slice(0,1)"></div>
-          </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="profile">个人信息</el-dropdown-item>
-              <el-dropdown-item command="signOut">退出登陆</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+        <el-col :span="2" style="float: right">
+          <el-row :gutter="20">
+            <el-col :span="6">
+              <el-badge :value="notifications.length" type="info" style="margin: 12px 0" :hidden="notifications.length === 0">
+                <el-popover placement="bottom" width="80" trigger="click">
+                  <el-table :data="notifications" empty-text="No data">
+                    <el-table-column property="name" label="Sender">
+                      <template slot-scope="scope">
+                        <el-button type="text" @click="goToChat(scope.row)">{{scope.row.name}}</el-button>
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                  <el-button slot="reference" size="medium" style="height: 36px; width: 36px" icon="el-icon-bell" circle></el-button>
+                </el-popover>
+              </el-badge>
+            </el-col>
+            <el-col :span="6">
+              <el-dropdown trigger="click" @command="handleCommand">
+                <span class="el-dropdown-link">
+                  <div class="avatar grid-content" v-html="profile.name.slice(0,1)"></div>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item command="profile">Personal</el-dropdown-item>
+                  <el-dropdown-item command="signOut">Sign out</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </el-col>
+          </el-row>
         </el-col>
       </el-row>
     </el-header>
@@ -38,15 +56,24 @@
 
 <script>
   import {mapState} from 'vuex'
+  import Echo from "laravel-echo";
 
   export default {
     name: 'backend',
     data() {
       return {
         year: '',
+        senders: new Map(),
+        notifications: []
       }
     },
     methods: {
+      goToChat(row) {
+        console.log(row)
+        let index = this.senders.get(row.id);
+        this.notifications.splice(index, 1);
+        this.$router.push({path: `/chat/${row.id}`})
+      },
       handleCommand(command) {
         switch (command) {
           case 'signOut':
@@ -64,7 +91,7 @@
         this.$store.commit('SET_ACCESS_TOKEN', false);
         this.$store.commit('SET_PROFILE', false);
         this.$message.success('注销成功');
-        // 这里用原生页面跳转而不是 this.$router.push("/signin"), 避免再次登录重复添加路由
+        // Here, the native page jump is used instead of this.$router.push("/signin") to avoid logging in again and adding routes repeatedly.
         window.location.href = '/signin';
       }
     },
@@ -81,6 +108,37 @@
     mounted() {
       let date = new Date();
       this.year = date.getFullYear();
+
+      window.Pusher = require('pusher-js');
+      window.Pusher.logToConsole = true;
+
+      window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: process.env.PUSHER_APP_KEY,
+        auth: {
+          headers: {
+            Authorization: `Bearer ${this.access_token}`
+          }
+        },
+        cluster: process.env.PUSHER_APP_CLUSTER,
+        encrypted: true,
+        logToConsole: true
+      });
+
+      window.Echo.private(`notify.${this.profile.id}`)
+          .listen('.MessageNotification', (e) => {
+            if (this.senders.has(e.sender.id) === false) {
+              if (this.$route.name === 'chat' && this.$route.params.id === e.sender.id) {
+                return;
+              }
+              this.notifications.push({
+                id: e.sender.id,
+                name: e.sender.name,
+                type: 'message'
+              });
+              this.senders.set(e.sender.id, this.notifications.length - 1);
+            }
+          });
     }
   }
 </script>
@@ -99,8 +157,8 @@
         float: right;
       }
       .avatar {
-        height: 36px;
         width: 36px;
+        height: 36px;
         background-color: #8c939d;
         float: right;
       }

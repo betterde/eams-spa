@@ -13,20 +13,20 @@
     <div class="panel">
       <div class="panel-body" :class="classes">
         <el-tabs v-model="active">
-          <el-tab-pane label="修改密码" name="password">
+          <el-tab-pane label="Security" name="security">
             <div class="password" style="max-width: 400px; margin: auto">
               <el-form ref="password" :model="params" :rules="rules" label-position="top" label-width="80px">
-                <el-form-item label="当前密码" prop="old">
-                  <el-input v-model="params.old" type="password" placeholder="请输入当前的密码" show-password></el-input>
+                <el-form-item label="Old Password" prop="old">
+                  <el-input v-model="params.old" type="password" placeholder="Please enter your old password" show-password></el-input>
                 </el-form-item>
-                <el-form-item label="新的密码" prop="password">
-                  <el-input v-model="params.password" type="password" placeholder="请输入您的新密码" show-password></el-input>
+                <el-form-item label="New password" prop="password">
+                  <el-input v-model="params.password" type="password" placeholder="Please enter your new password" show-password></el-input>
                 </el-form-item>
-                <el-form-item label="确认密码" prop="password_confirmation">
-                  <el-input v-model="params.password_confirmation" type="password" placeholder="请再次输入您的新密码" show-password></el-input>
+                <el-form-item label="Confirm password" prop="password_confirmation">
+                  <el-input v-model="params.password_confirmation" type="password" placeholder="Please enter your new password again" show-password></el-input>
                 </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" :loading="loading" @click="submit('password')">确认修改</el-button>
+                  <el-button type="primary" :loading="loading" @click="submit('password')">Submit</el-button>
                 </el-form-item>
               </el-form>
             </div>
@@ -54,11 +54,8 @@
       return {
         header: '',
         loading: false,
-        active: 'password',
+        active: 'security',
         classes: ['animated', 'fade-in', 'fast'],
-        addrform: {
-          address: ''
-        },
         params: {
           old: '',
           password: '',

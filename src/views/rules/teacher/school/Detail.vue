@@ -7,8 +7,8 @@
             <el-button type="info" plain @click="$router.back()">Go back</el-button>
           </el-col>
           <el-col :span="12" style="text-align: right">
-            <el-button v-if="active === 'student'" type="primary" plain @click="handleCreateStudent">Create</el-button>
-            <el-button v-else-if="active === 'invitation'" type="primary" plain @click="handleTeacherInvitation">Create</el-button>
+            <el-button v-if="profile.id === school.manager_id && active === 'student'" type="primary" plain @click="handleCreateStudent">Create</el-button>
+            <el-button v-else-if="profile.id === school.manager_id && active === 'invitation'" type="primary" plain @click="handleTeacherInvitation">Create</el-button>
           </el-col>
         </el-row>
       </div>
@@ -80,7 +80,7 @@
             <el-table-column v-if="profile.id === school.manager_id" prop="option" label="Actions" width="90">
               <template slot-scope="scope">
                 <el-tooltip class="item" effect="dark" content="Chat" placement="top">
-                  <el-button size="mini" icon="el-icon-chat-dot-round" plain circle @click="sendMessage(scope.row)" :disabled="school.manager_id !== profile.id"></el-button>
+                  <el-button size="mini" icon="el-icon-chat-dot-round" plain circle @click="goToChat(scope.row)" :disabled="school.manager_id !== profile.id"></el-button>
                 </el-tooltip>
                 <el-tooltip class="item" effect="dark" content="Delete" placement="top">
                   <el-button size="mini" icon="el-icon-delete" type="danger" plain circle @click="handleDeleteStudent(scope.row)" :disabled="profile.id === school.manager_id"></el-button>
@@ -388,7 +388,8 @@
             break;
         }
       },
-      sendMessage(row) {
+      goToChat(row) {
+        this.$router.push({path: `/chat/${row.id}`})
       },
       changeTab(current) {
         if (current.name === 'teacher') {

@@ -30,6 +30,15 @@ function registration() {
       ]
     },
     {
+      path: '/chat/:id',
+      name: 'chat',
+      meta: {
+        requiresAuth: true,
+        rules: ['user', 'customer']
+      },
+      component: () => import('../views/rules/teacher/chat/Chat.vue'),
+    },
+    {
       path: '/profile',
       name: 'profile',
       meta: {

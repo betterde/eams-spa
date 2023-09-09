@@ -5,10 +5,12 @@
   "scripts": {
     "serve": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
     "build": "export NODE_OPTIONS=--openssl-legacy-provider && rm -rf public/{js,fonts,css} && vue-cli-service build --no-clean",
-    "lint": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint",
+    "lint": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint"
   },
   "dependencies": {
     "element-ui": "^2.15.14",
+    "laravel-echo": "^1.15.3",
+    "pusher-js": "^8.3.0",
     "sass": "~1.32",
     "vue": "^2.6.6",
     "vue-router": "^3.0.6",

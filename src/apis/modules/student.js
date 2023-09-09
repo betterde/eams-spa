@@ -8,5 +8,8 @@ export default {
   },
   createStudent(params) {
     return Vue.axios.post('/api/student', params);
+  },
+  fetchStudent(id) {
+    return Vue.axios.get(`/api/student/${id}`);
   }
 }

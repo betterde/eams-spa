@@ -34,6 +34,15 @@ module.exports = {
         pathRewrite: {
           '^/api': '/api'
         }
+      },
+      '/broadcasting': {
+        target: 'https://www.sjms.local',
+        ws: true,
+        changeOrigin: true,
+        secure: false,
+        pathRewrite: {
+          '^/broadcasting': '/broadcasting'
+        }
       }
     },
     compress: true,
