@@ -85,7 +85,7 @@ router.beforeEach((to, from, next) => {
     })
   }
 
-  // 如果从NotFound 页面返回，并且需要认证的话，则设置视图的Layout 为 backend
+  // 如果从 NotFound 页面返回，并且需要认证的话，则设置视图的Layout 为 backend
   if (from.name === 'notfound' && to.meta.requiresAuth === true) {
     store.commit('SET_LAYOUT_CURRENT', 'backend')
   }

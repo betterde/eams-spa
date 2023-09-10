@@ -42,7 +42,6 @@
 <script>
 import {mapState} from 'vuex'
 import api from '../../../../apis'
-import Echo from "laravel-echo";
 
 export default {
   name: 'Chat',
@@ -60,8 +59,7 @@ export default {
         name: '',
         email: '',
       },
-      messages: [],
-      connector: null,
+      messages: []
     }
   },
   methods: {
@@ -78,6 +76,7 @@ export default {
     fetchMessages() {
       api.message.fetchMessages({to: this.id}).then(res => {
         this.messages = res.data;
+        this.scrollToBottom();
       }).catch(err => {
         this.$message.error({
           offset: 95,
@@ -91,6 +90,7 @@ export default {
         this.sending = false;
         this.message.content = '';
         this.messages.push(res.data);
+        this.scrollToBottom();
       }).catch(err => {
         this.sending = false;
         this.$message.error({
@@ -98,6 +98,15 @@ export default {
           message: err.message
         });
       })
+    },
+    scrollToBottom() {
+      this.$nextTick(() => {
+        let container = this.$el.querySelector('.messages-container');
+        container.scrollTo({
+          top: container.scrollHeight,
+          behavior: 'smooth'
+        })
+      });
     }
   },
   computed: {
@@ -107,25 +116,10 @@ export default {
     })
   },
   mounted() {
-    window.Pusher = require('pusher-js');
-    window.Pusher.logToConsole = true;
-
-    this.connector = new Echo({
-      broadcaster: 'pusher',
-      key: process.env.VUE_APP_PUSHER_APP_KEY,
-      auth: {
-        headers: {
-          Authorization: `Bearer ${this.access_token}`
-        }
-      },
-      cluster: process.env.VUE_APP_PUSHER_APP_CLUSTER,
-      encrypted: true,
-      logToConsole: true
-    });
-
-    this.connector.private(`message.${this.profile.id}`)
+    window.Echo.private(`message.${this.profile.id}`)
         .listen('.MessageNotification', (e) => {
           this.messages.push(e.message)
+          this.scrollToBottom();
         });
 
     this.fetchStudent();

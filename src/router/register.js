@@ -26,7 +26,7 @@ function registration(guard) {
           requiresAuth: true,
           rules: ['student']
         },
-        component: () => import('../views/rules/student/chat/Chat.vue'),
+        component: () => import('../views/rules/student/Chat.vue'),
       }
     ];
   }
@@ -60,6 +60,15 @@ function registration(guard) {
           component: () => import('../views/rules/teacher/school/Detail.vue')
         }
       ]
+    },
+    {
+      path: '/followers',
+      name: 'followers',
+      meta: {
+        requiresAuth: true,
+        rules: ['teacher']
+      },
+      component: () => import('../views/rules/teacher/Followers.vue')
     },
     {
       path: '/chat/:id',

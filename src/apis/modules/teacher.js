@@ -6,7 +6,10 @@ export default {
       params: params
     });
   },
-  sendInvitation(params) {
-    return Vue.axios.post('/api/')
+  changeFollowStatus(params) {
+    return Vue.axios.put('/api/teacher/follow', params);
+  },
+  fetchFollowers(params) {
+    return Vue.axios.get('/api/teacher/followers', params);
   }
 }

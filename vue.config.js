@@ -26,20 +26,20 @@ module.exports = {
     //   ca: fs.readFileSync('certs/ca-bundle.trust.crt'),
     // },
     proxy: {
-      '/api': {
-        target: 'https://www.sjms.local',
-        ws: true,
-        changeOrigin: true,
-        secure: false,
-        pathRewrite: {
-          '^/api': '/api'
-        }
-      },
+      // '/api': {
+      //   ws: true,
+      //   secure: false,
+      //   target: 'https://www.sjms.local',
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     '^/api': '/api'
+      //   }
+      // },
       '/broadcasting': {
-        target: 'https://www.sjms.local',
         ws: true,
-        changeOrigin: true,
         secure: false,
+        target: 'https://www.sjms.local',
+        changeOrigin: true,
         pathRewrite: {
           '^/broadcasting': '/broadcasting'
         }

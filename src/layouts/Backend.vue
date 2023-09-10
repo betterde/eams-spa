@@ -4,13 +4,14 @@
       <el-row :gutter="20">
         <el-col :span="2">
           <div class="grid-content logo">
-            <h3 style="line-height: 36px;"><router-link to="/server">EAMS</router-link></h3>
+            <h3 style="line-height: 36px;"><router-link to="/">EAMS</router-link></h3>
           </div>
         </el-col>
         <el-col :span="20">
           <el-menu v-if="profile.guard === 'teacher'" :default-active="module" class="el-menu-nav" mode="horizontal" router>
             <el-menu-item index="/">Dashboard</el-menu-item>
             <el-menu-item index="/school">School</el-menu-item>
+            <el-menu-item index="/followers">Followers</el-menu-item>
           </el-menu>
           <el-menu v-else :default-active="module" class="el-menu-nav" mode="horizontal" router>
             <el-menu-item index="/">Dashboard</el-menu-item>
@@ -20,7 +21,7 @@
         </el-col>
         <el-col :span="2">
           <el-row :gutter="20" type="flex" justify="end">
-            <el-col :span="6">
+            <el-col :lg="12" :xl="8" style="text-align: right">
               <el-badge :value="notifications.length" type="info" style="margin: 12px 0" :hidden="notifications.length === 0">
                 <el-popover placement="bottom" width="80" trigger="click">
                   <el-table :data="notifications" empty-text="No data">
@@ -34,12 +35,12 @@
                 </el-popover>
               </el-badge>
             </el-col>
-            <el-col :span="6">
+            <el-col :lg="12" :xl="8" style="text-align: right">
               <el-dropdown trigger="click" @command="handleCommand">
                 <span class="el-dropdown-link">
                   <div class="avatar grid-content" v-html="profile.name.slice(0,1)"></div>
                 </span>
-                <el-dropdown-menu slot="dropdown">
+                <el-dropdown-menu v-slot="dropdown">
                   <el-dropdown-item command="profile">Personal</el-dropdown-item>
                   <el-dropdown-item command="signOut">Sign out</el-dropdown-item>
                 </el-dropdown-menu>
@@ -67,16 +68,23 @@
     name: 'backend',
     data() {
       return {
-        year: '',
         senders: new Map(),
         notifications: []
       }
     },
     methods: {
       goToChat(row) {
+        // Get notification index from senders map
         let index = this.senders.get(row.id);
+
+        // Delete notification from array using index
         this.notifications.splice(index, 1);
-        this.$router.push({path: `/chat/${row.id}`})
+
+        if (this.profile.guard === 'student') {
+          this.$router.push({path: '/chat'});
+        } else {
+          this.$router.push({path: `/chat/${row.id}`});
+        }
       },
       handleCommand(command) {
         switch (command) {
@@ -85,9 +93,6 @@
             break;
           case 'profile':
             this.$router.push({path: '/profile'});
-            break;
-          case 'journal':
-            this.$router.push({path: '/journal'});
             break;
         }
       },
@@ -110,9 +115,6 @@
       }
     },
     mounted() {
-      let date = new Date();
-      this.year = date.getFullYear();
-
       window.Pusher = require('pusher-js');
       window.Pusher.logToConsole = true;
 
@@ -132,9 +134,14 @@
       window.Echo.private(`notify.${this.profile.id}`)
           .listen('.MessageNotification', (e) => {
             if (this.senders.has(e.sender.id) === false) {
-              if (this.$route.name === 'chat' && this.$route.params.id === e.sender.id) {
+              if (this.profile.guard === 'teacher' && this.$route.name === 'chat' && this.$route.params.id === e.sender.id) {
                 return;
               }
+
+              if (this.profile.guard === 'student' && this.$route.name === 'chat') {
+                return;
+              }
+
               this.notifications.push({
                 id: e.sender.id,
                 name: e.sender.name,

@@ -1,5 +1,5 @@
 <template>
-  <div class="signinview">
+  <div class="signin-view">
     <div class="panel signin">
       <div class="panel-header">
         <h1 class="panel-title">EAMS</h1>
@@ -21,9 +21,6 @@
           <el-form-item class="login-button">
             <el-button type="primary" plain class="pull-right" style="width: 100%" @click="submit" :loading="loading">Sign-In</el-button>
           </el-form-item>
-          <el-form-item>
-            <div id="sign-in-with-google" style="text-align: center"></div>
-          </el-form-item>
           <div class="tips">
             <p>If you forgot your password, <router-link to="/forgot">Please click here!</router-link></p>
           </div>
@@ -34,18 +31,14 @@
 </template>
 
 <script>
-  import api from '../../../apis';
   import store from '../../../store';
-  import register from "../../../router/register";
+  import register from '../../../router/register';
 
   export default {
     name: "SignIn",
     data() {
       return {
         loading: false,
-        platform: {
-          google: false
-        },
         credentials: {
           guard: '',
           username: '',
@@ -61,7 +54,7 @@
           password: [
             {required: true, message: 'Please enter password', trigger: 'blur'},
           ]
-        }
+        },
       }
     },
     methods: {
@@ -88,11 +81,6 @@
           }
         });
       }
-    },
-    mounted() {
-      api.system.fetchPlatform().then(res => {
-        this.platform = res.data;
-      });
     }
   }
 </script>
@@ -103,7 +91,7 @@
     margin: 0;
   }
 
-  .signinview {
+  .signin-view {
     height: 100%;
     display: flex;
     background: #62a8ea;

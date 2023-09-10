@@ -1,6 +1,6 @@
 <template>
   <div class="page-error page-error-404 layout-full">
-    <div class="page animsition vertical-align text-center" data-animsition-in="fade-in" data-animsition-out="fade-out">
+    <div class="page animation vertical-align text-center" data-animsition-in="fade-in" data-animsition-out="fade-out">
       <div class="page-content">
         <header>
           <h1 class="code animation-slide-top">404</h1>

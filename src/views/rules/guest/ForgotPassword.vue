@@ -1,19 +1,19 @@
 <template>
-  <div class="forgotview">
+  <div class="forgot-view">
     <div class="panel forgot">
       <div class="panel-header">
-        <h1 class="panel-title">发送重置链接</h1>
+        <h1 class="panel-title">Send reset link</h1>
       </div>
       <div class="panel-body">
         <el-form :model="credentials" :rules="rules" @submit.native.prevent ref="forgot">
           <el-form-item prop="email">
-            <el-input v-model="credentials.email" autocomplete="off" @keyup.enter.native="submit" placeholder="请输入您的邮箱地址"></el-input>
+            <el-input v-model="credentials.email" autocomplete="off" @keyup.enter.native="submit" placeholder="Please enter your e-mail address"></el-input>
           </el-form-item>
           <el-form-item class="login-button">
-            <el-button type="primary" plain class="pull-right" style="width: 100%" @click="submit" :loading="loading">发送邮件</el-button>
+            <el-button type="primary" plain class="pull-right" style="width: 100%" @click="submit" :loading="loading">Submit</el-button>
           </el-form-item>
           <div class="tips">
-            <p><router-link to="/signin">返回登录页面</router-link></p>
+            <p><router-link to="/signin">Return to sign-in</router-link></p>
           </div>
         </el-form>
       </div>
@@ -36,12 +36,12 @@
           email: [
             {
               required: true,
-              message: '请输入邮箱地址',
+              message: 'Please enter your e-mail address',
               trigger: 'blur'
             },
             {
               type: 'email',
-              message: '请输入正确的邮箱地址',
+              message: 'Please input the correct email address',
               trigger: ['blur', 'change']
             }
           ]
@@ -80,7 +80,7 @@
     margin: 0;
   }
 
-  .forgotview {
+  .forgot-view {
     height: 100%;
     display: flex;
     background: #62a8ea;

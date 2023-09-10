@@ -4,12 +4,12 @@
       <div class="panel-tools">
         <el-row :gutter="20">
           <el-col :xs="24" :span="6">
-            <el-input placeholder="Search schools by typing here" v-model="params.search" @keyup.enter.native="fetchServer" @clear="handleClear" clearable>
+            <el-input placeholder="Search schools by typing here" v-model="params.search" @keyup.enter.native="fetchSchools" @clear="handleClear" clearable>
               <i slot="prefix" class="el-input__icon el-icon-search"></i>
             </el-input>
           </el-col>
           <el-col :xs="12" :span="2">
-            <el-button type="primary" icon="el-icon-search" @click="fetchServer" plain>Search</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="fetchSchools" plain>Search</el-button>
           </el-col>
           <el-col :xs="12" :span="16" style="text-align: right">
             <el-button type="primary" plain @click="handleCreate">Create</el-button>
@@ -33,7 +33,7 @@
       </div>
     </el-dialog>
     <div class="panel-body" :class="classes">
-      <el-table v-loading="loading" :data="servers" style="width: 100%">
+      <el-table v-loading="loading" :data="schools" style="width: 100%">
         <el-table-column prop="id" label="ID" width="300"></el-table-column>
         <el-table-column prop="name" label="Name"></el-table-column>
         <el-table-column prop="status" label="Status">
@@ -98,11 +98,7 @@
         ],
         params: {
           size: 10,
-          brand: '',
-          zero: null,
           search: '',
-          type: '',
-          date: null,
           current_page: 1
         },
         create: {
@@ -116,10 +112,7 @@
             ]
           }
         },
-        brands: [],
-        categories: [],
-        servers: [],
-        customers: [],
+        schools: [],
         meta: {
           total: 0,
           pager_count: 11,
@@ -134,7 +127,7 @@
        */
       handleCurrentChange(page) {
         this.params.page = page;
-        this.fetchServer();
+        this.fetchSchools();
       },
       handleClose(form) {
         switch (form) {
@@ -165,7 +158,7 @@
                     offset: 95,
                     message: res.message
                   });
-                  this.fetchServer();
+                  this.fetchSchools();
                 }).catch(err => {
                   this.$message.error({
                     offset: 95,
@@ -183,7 +176,7 @@
                 offset: 95,
                 message: res.message
               });
-              this.fetchServer();
+              this.fetchSchools();
               this.handleClose(form);
             }).catch(err => {
               this.$message.error({
@@ -209,7 +202,7 @@
               offset: 95,
               message: res.message
             });
-            this.fetchServer();
+            this.fetchSchools();
           }).catch(err => {
             this.$message.error({
               offset: 95,
@@ -227,16 +220,16 @@
         this.$router.push({path: `/school/${row.id}/detail`});
       },
       handleClear() {
-        this.fetchServer();
+        this.fetchSchools();
       },
       handleSizeChange(size) {
         this.params.size = size;
-        this.fetchServer();
+        this.fetchSchools();
       },
-      fetchServer() {
+      fetchSchools() {
         this.loading = true;
         api.school.fetchSchools(this.params).then(res => {
-          this.servers = res.data;
+          this.schools = res.data;
           this.params.current_page = res.current_page;
           this.meta.total = res.total;
           this.loading = false;
@@ -258,7 +251,7 @@
         this.meta.pager_count = 5;
         this.meta.layout = 'prev, pager, next';
       }
-      this.fetchServer();
+      this.fetchSchools();
     }
   }
 </script>
