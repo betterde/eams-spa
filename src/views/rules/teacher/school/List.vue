@@ -90,12 +90,6 @@
         },
         loading: false,
         classes: ['animated', 'fade-in', 'fast'],
-        handlers: [
-          {
-            "label": "file_server",
-            "value": "file_server"
-          }
-        ],
         params: {
           size: 10,
           search: '',
@@ -135,12 +129,6 @@
             this.$refs.create.resetFields();
             this.create.dialog = false;
             break;
-          case 'update':
-            this.$refs.update.resetFields();
-            this.update.dialog = false;
-            this.update.id = null;
-            this.update.index = null;
-            break;
         }
       },
       /**
@@ -152,7 +140,7 @@
           case 'create':
             this.$refs.create.validate(valid => {
               if (valid) {
-                api.server.createServer(this.create.params).then(res => {
+                api.school.createSchool(this.create.params).then(res => {
                   this.handleClose(form);
                   this.$message.success({
                     offset: 95,
@@ -170,21 +158,6 @@
               }
             });
             break;
-          case 'update':
-            api.server.updateServer(this.update.id, this.update.params).then(res => {
-              this.$message.success({
-                offset: 95,
-                message: res.message
-              });
-              this.fetchSchools();
-              this.handleClose(form);
-            }).catch(err => {
-              this.$message.error({
-                offset: 95,
-                message: err.message
-              });
-            });
-            break;
         }
       },
       handleCreate() {
@@ -196,7 +169,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          api.server.deleteServer(row.id).then(res => {
+          api.school.deleteSchool(row.id).then(res => {
             this.$message({
               type: 'success',
               offset: 95,

@@ -52,7 +52,7 @@ function registration(guard) {
       children: [
         {
           path: ':id/detail',
-          name: 'serverDetail',
+          name: 'schoolDetail',
           meta: {
             requiresAuth: true,
             rules: ['teacher']

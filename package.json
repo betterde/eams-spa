@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
     "serve": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider && rm -rf public/{js,fonts,css} && vue-cli-service build --no-clean",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider && rm -rf public && vue-cli-service build --no-clean",
     "lint": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint"
   },
   "dependencies": {

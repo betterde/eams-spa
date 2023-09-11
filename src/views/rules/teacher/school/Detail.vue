@@ -405,24 +405,12 @@
         }
       },
       handleDeleteTeacher(row) {
-        this.$confirm('此操作将删除订单中的商品，是否继续', '警告', {
-          confirmButtonText: '继续',
-          cancelButtonText: '取消',
+        this.$confirm('Are you sure you want to delete it?', 'Warning', {
+          confirmButtonText: 'Continue',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
-          // api.trading.deleteTrading(row.id).then(res => {
-          //   this.$message({
-          //     type: 'success',
-          //     offset: 95,
-          //     message: res.message
-          //   });
-          //   this.fetchTeachers();
-          // }).catch(err => {
-          //   this.$message.error({
-          //     offset: 95,
-          //     message: err.message
-          //   })
-          // });
+          //
         }).catch(() => {
           this.$message.info({
             offset: 95,
@@ -431,24 +419,12 @@
         });
       },
       handleDeleteStudent(row) {
-        this.$confirm('此操作将删除订单中的商品，是否继续', '警告', {
-          confirmButtonText: '继续',
-          cancelButtonText: '取消',
+        this.$confirm('Are you sure you want to delete it?', 'Warning', {
+          confirmButtonText: 'Continue',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
-          // api.trading.deleteTrading(row.id).then(res => {
-          //   this.$message({
-          //     type: 'success',
-          //     offset: 95,
-          //     message: res.message
-          //   });
-          //   this.fetchTeachers();
-          // }).catch(err => {
-          //   this.$message.error({
-          //     offset: 95,
-          //     message: err.message
-          //   })
-          // });
+          //
         }).catch(() => {
           this.$message.info({
             offset: 95,

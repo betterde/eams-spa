@@ -6,16 +6,13 @@ export default {
             params: params
         });
     },
-    createServer(params) {
-        return Vue.axios.post('/api/server', params);
+    createSchool(params) {
+        return Vue.axios.post('/api/school', params);
     },
     fetchSchool(id) {
       return Vue.axios.get(`/api/school/${id}`);
     },
-    updateServer(id, params) {
-        return Vue.axios.put(`/api/server/${id}`, params)
-    },
-    deleteServer(id) {
-        return Vue.axios.delete(`/api/server/${id}`);
+    deleteSchool(id) {
+        return Vue.axios.delete(`/api/school/${id}`);
     }
 }
