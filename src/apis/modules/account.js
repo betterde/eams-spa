@@ -3,9 +3,9 @@ import Vue from 'vue'
 export default {
   register(query, params) {
     if (query.email && query.signature) {
-      return Vue.axios.post(`/api/auth/register?email=${query.email}&school=${query.school}&expires=${query.expires}&signature=${query.signature}`, params);
+      return Vue.axios.post(`/api/auth/signup?email=${query.email}&school=${query.school}&expires=${query.expires}&signature=${query.signature}`, params);
     } else {
-      return Vue.axios.post('/api/auth/register', params);
+      return Vue.axios.post('/api/auth/signup', params);
     }
   },
   forgot(params) {
