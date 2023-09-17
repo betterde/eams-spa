@@ -46,7 +46,7 @@
     data() {
       let confirmation = (rule, value, callback) => {
         if (value !== this.params.password) {
-          callback(new Error('两次输入密码不一致!'));
+          callback(new Error('The two passwords are inconsistent!'));
         } else {
           callback();
         }
@@ -63,13 +63,13 @@
         },
         rules: {
           old: [
-            {required: true, message: '请输入密码', trigger: 'blur'}
+            {required: true, message: 'Please enter password', trigger: 'blur'}
           ],
           password: [
-            {required: true, message: '请输入密码', trigger: 'blur'}
+            {required: true, message: 'Please enter password', trigger: 'blur'}
           ],
           password_confirmation: [
-            {required: true, message: '请输入密码', trigger: 'blur'},
+            {required: true, message: 'Please enter password', trigger: 'blur'},
             {validator: confirmation, trigger: 'blur'}
           ]
         }

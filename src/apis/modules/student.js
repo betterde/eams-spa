@@ -11,5 +11,8 @@ export default {
   },
   fetchStudent(id) {
     return Vue.axios.get(`/api/student/${id}`);
+  },
+  deleteStudent(id) {
+    return Vue.axios.delete(`/api/student/${id}`);
   }
 }

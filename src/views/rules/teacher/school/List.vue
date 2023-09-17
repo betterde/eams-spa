@@ -117,7 +117,7 @@
     },
     methods: {
       /**
-       * 分页跳转时触发
+       * Triggered when page jump.
        */
       handleCurrentChange(page) {
         this.params.page = page;
@@ -164,9 +164,9 @@
         this.create.dialog = true;
       },
       handleDelete(row) {
-        this.$confirm('此操作将删除服务器，是否继续', '警告', {
-          confirmButtonText: '继续',
-          cancelButtonText: '取消',
+        this.$confirm('This operation will delete school data. Do you want to continue?', 'Warning', {
+          confirmButtonText: 'Continue',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
           api.school.deleteSchool(row.id).then(res => {
@@ -185,7 +185,7 @@
         }).catch(() => {
           this.$message.info({
             offset: 95,
-            message: '操作已取消'
+            message: 'Operation canceled'
           });
         });
       },

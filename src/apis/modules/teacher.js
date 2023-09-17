@@ -11,5 +11,8 @@ export default {
   },
   fetchFollowers(params) {
     return Vue.axios.get('/api/teacher/followers', params);
+  },
+  deleteTeacher(id) {
+    return Vue.axios.delete(`/api/teacher/${id}`);
   }
 }

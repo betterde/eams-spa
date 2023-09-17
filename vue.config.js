@@ -11,13 +11,13 @@ module.exports = {
       chunks: ['chunk-vendors', 'chunk-common', 'index']
     }
   },
-  outputDir: 'public',
-  indexPath: 'index.html',
+  outputDir: '../api/public',
+  indexPath: process.env.NODE_ENV === 'production' ? '../api/resources/views/index.blade.php' : 'index.html',
   // configureWebpack: {
   //
   // },
   devServer: {
-    // host: 'www.sjms.local',
+    // host: 'eams.orb.local',
     // port: 443,
     // http2: true,
     // https: {

@@ -13,15 +13,7 @@
     name: "School",
     data() {
       return {
-        breadcrumbs: [],
-        filtered: false,
-        action: 'list',
-        actions: {
-          detail: {
-            path: null,
-            label: '订单详情',
-          }
-        }
+        action: 'list'
       }
     },
     methods: {
@@ -35,17 +27,8 @@
         let uris = to.path.split('/');
         if (uris.length > 2) {
           this.action = uris.pop();
-          this.breadcrumbs.push({
-            path: '/order',
-            label: '订单管理',
-          });
-          let current = this.actions[this.action];
-          this.breadcrumbs.push(current)
         } else {
           this.action = 'list';
-        }
-        if (this.action === 'list') {
-          this.breadcrumbs = [];
         }
       }
     },
@@ -53,12 +36,6 @@
       let uris = this.$route.path.split('/');
       if (uris.length > 2) {
         this.action = uris.pop();
-        this.breadcrumbs.push({
-          path: '/order',
-          label: '订单管理',
-        });
-        let current = this.actions[this.action];
-        this.breadcrumbs.push(current)
       } else {
         this.action = 'list';
       }

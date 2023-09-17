@@ -410,7 +410,17 @@
           cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
-          //
+          api.teacher.deleteTeacher(row.id).then(res => {
+            this.$message.success({
+              offset: 95,
+              message: res.message
+            });
+          }).catch(err => {
+            this.$message.error({
+              offset: 95,
+              message: err.message
+            });
+          });
         }).catch(() => {
           this.$message.info({
             offset: 95,
@@ -424,7 +434,17 @@
           cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
-          //
+          api.student.deleteStudent(row.id).then(res => {
+            this.$message.success({
+              offset: 95,
+              message: res.message
+            });
+          }).catch(err => {
+            this.$message.error({
+              offset: 95,
+              message: err.message
+            });
+          })
         }).catch(() => {
           this.$message.info({
             offset: 95,

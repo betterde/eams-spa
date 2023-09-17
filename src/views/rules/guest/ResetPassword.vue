@@ -2,21 +2,21 @@
   <div class="auth-view">
     <div class="panel signin">
       <div class="panel-header">
-        <h1 class="panel-title">重置您的密码</h1>
+        <h1 class="panel-title">Reset your password</h1>
       </div>
       <div class="panel-body">
         <el-form :model="credentials" :rules="rules" @submit.native.prevent ref="reset">
           <el-form-item prop="password">
-            <el-input type="password" v-model="credentials.password" placeholder="请输入新的密码" show-password></el-input>
+            <el-input type="password" v-model="credentials.password" placeholder="Please enter new password" show-password></el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input type="password" v-model="credentials.password_confirmation" @keyup.enter.native="submit" placeholder="请再次输入密码" show-password></el-input>
+            <el-input type="password" v-model="credentials.password_confirmation" @keyup.enter.native="submit" placeholder="Please enter password again" show-password></el-input>
           </el-form-item>
           <el-form-item class="login-button">
-            <el-button type="primary" plain class="pull-right" style="width: 100%" @click="submit" :loading="loading">确认重置</el-button>
+            <el-button type="primary" plain class="pull-right" style="width: 100%" @click="submit" :loading="loading">Confirm reset</el-button>
           </el-form-item>
           <div class="tips">
-            <p><router-link to="/signin">返回登录页面</router-link></p>
+            <p><router-link to="/signin">Return to Sign-in page</router-link></p>
           </div>
         </el-form>
       </div>
@@ -32,9 +32,9 @@
     data() {
       let confirmed = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('请再次输入密码'));
+          callback(new Error('Please enter password again'));
         } else if (value !== this.credentials.password) {
-          callback(new Error('两次输入密码不一致!'));
+          callback(new Error('The password entered twice is inconsistent!'));
         } else {
           callback();
         }
@@ -49,8 +49,8 @@
         },
         rules: {
           password: [
-            {required: true, message: '请输入密码', trigger: 'blur'},
-            {min: 8, max: 16, message: '长度在 8 到 16 个字符'}
+            {required: true, message: 'Please enter password', trigger: 'blur'},
+            {min: 8, max: 16, message: 'The length is 8 to 16 characters'}
           ],
           password_confirmation: [
             {validator: confirmed, trigger: 'blur'},
